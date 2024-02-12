@@ -28,7 +28,7 @@ class MfpSpider(scrapy.Spider):
 
     def get_dts(self):
         ndays = (self.end_date-self.start_date).days
-        return [self.start_date + timedelta(i) for i in xrange(ndays+1)]
+        return [self.start_date + timedelta(i) for i in range(ndays+1)]
 
     def parse(self, response):
         return scrapy.FormRequest.from_response(response,
