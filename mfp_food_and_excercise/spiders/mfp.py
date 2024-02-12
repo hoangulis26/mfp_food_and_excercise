@@ -11,7 +11,7 @@ class MfpSpider(scrapy.Spider):
         'https://www.myfitnesspal.com/account/login',
     )
 
-    def __init__(self, username='', password='', start_date=None, target_date='', 
+    def __init__(self, username='', password='', start_date=None, target_date='',
         target_file='', outdir='output', *args, **kwargs):
         super(MfpSpider, self).__init__(*args, **kwargs)
         self.username = username
@@ -37,7 +37,7 @@ class MfpSpider(scrapy.Spider):
             callback=self.logged_in)
 
     def logged_in(self, response):
-        print 'LOGGED IN. PROCESSING...'
+        print ()'LOGGED IN. PROCESSING...')
         for dt in self.dts:
             dtstr = dt.strftime('%Y-%m-%d')
             yield scrapy.Request(url="http://www.myfitnesspal.com/reports/printable_diary?from="+ dtstr + "&to="+ dtstr,
@@ -49,7 +49,7 @@ class MfpSpider(scrapy.Spider):
 
     def get_outfile(self, name):
         return os.path.join(self.outdir, name + '.csv')
-    
+
     def read_tables(self, response, name, delimiter='\t'):
         frmt = lambda x: delimiter.join(x).encode('UTF-8')# + u"\n".encode('UTF-8')
         outputs = []
@@ -65,7 +65,7 @@ class MfpSpider(scrapy.Spider):
         foods = self.read_tables(response, 'food')
         exercise = self.read_tables(response, 'excercise') # n.b. the typo
         title = dtparser.parse(dts[0]).strftime('%Y-%m-%d') if dts else ''
-        
+
         # write data
         self.write_table(foods, self.get_outfile(title + "-food"))
         self.write_table(exercise, self.get_outfile(title + "-exercise"))
