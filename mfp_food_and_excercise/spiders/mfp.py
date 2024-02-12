@@ -37,7 +37,7 @@ class MfpSpider(scrapy.Spider):
             callback=self.logged_in)
 
     def logged_in(self, response):
-        print ()'LOGGED IN. PROCESSING...')
+        print ('LOGGED IN. PROCESSING...')
         for dt in self.dts:
             dtstr = dt.strftime('%Y-%m-%d')
             yield scrapy.Request(url="http://www.myfitnesspal.com/reports/printable_diary?from="+ dtstr + "&to="+ dtstr,
